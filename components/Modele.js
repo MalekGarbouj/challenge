@@ -1,12 +1,14 @@
 
 import React from 'react'
-import {TextInput,Alert,ImageBackground,Image,Button,Text } from 'react-native'
+import {Image,Button,Text,StyleSheet,Alert} from 'react-native'
 import '@firebase/firestore'
 import firebase from '../firebase'
-import { View,} from 'native-base'
+import { View} from 'native-base'
+import {Input} from 'react-native-elements'
 
 const ref = firebase.firestore().collection('Modele');
 const db = firebase.firestore();
+
 export default class Modele extends React.Component{  
   constructor(props) {
     super(props)
@@ -25,6 +27,7 @@ export default class Modele extends React.Component{
     var Daate=date + '-' + month + '-' + year;
     return (Daate)
    }
+  
   addModele() {
     if (!((this.state.type=="text")||(this.state.type=="image")||(this.state.type=="date")||(this.state.type=="signature")))
     {return Alert.alert(
@@ -87,26 +90,41 @@ export default class Modele extends React.Component{
   }
 
   render() {
-    return(
-      <ImageBackground source={require('../assets/images/arriere-plan.jpg')} style={{width: '100%', height: '100%'}}>
-         <View><Image  style={{width:60,height:50,marginTop:5,marginLeft:5}}
+    return(<View>
+       <View><Image  style={{width:40,height:40,marginTop:4,marginLeft:4}}
           source={require('../assets/images/images.png')}/></View>
-          <View style={{marginTop:16}}><Text style={{textAlign:'center',fontSize:30,fontWeight:'bold'}}>Ajouter votre modèle</Text></View>
-      <View>
-        <View style={{marginTop:60}}>
-        <TextInput style={{borderWidth:3,borderColor:'black',height:50,marginLeft:10,marginRight:10,textAlign:'center',marginTop:10,borderRadius:10,backgroundColor:'white'}}
+           <View style={{alignContent:'center',justifyContent:'center'}}>
+          <View style={styles.titre}><Text style={styles.texttire}>Ajouter un modèle</Text></View>
+        <View style={{marginTop:100}}>
+        <Input style={{height:50,marginLeft:30,marginRight:30,textAlign:'center'}}
          placeholder='Saisie un nom' returnKeyLabel = {"next"}
-          onChangeText={(text) => this.setState({nom:text})}></TextInput>
-      <TextInput style={{borderWidth:3,borderColor:'black',height:50,marginLeft:10,marginRight:10,textAlign:'center',marginTop:10,borderRadius:10,backgroundColor:'white'}} 
+          onChangeText={(text) => this.setState({nom:text})}/>
+      <Input style={{height:50,marginLeft:30,marginRight:30,textAlign:'center'}} 
       placeholder='Saisie un label'  returnKeyLabel = {"next"}
-          onChangeText={(text) => this.setState({label:text})}></TextInput>
-      <TextInput style={{borderWidth:3,borderColor:'black',height:50,marginLeft:10,marginRight:10,textAlign:'center',marginTop:10,borderRadius:10,backgroundColor:'white'}}
-       placeholder='Saisie un type'  returnKeyLabel = {"next"}
-          onChangeText={(text) => this.setState({type:text})}></TextInput>
-         </View>
-         <View style={{marginTop:100,marginLeft:10,marginRight:10}}><Button title='Enregistrer'  onPress={() => this.addModele()}></Button></View>
+          onChangeText={(text) =>this.setState({label:text})}/>
+           <Input style={{height:50,marginLeft:30,marginRight:30,textAlign:'center'}} 
+      placeholder='Saisie un type'  returnKeyLabel = {"next"}
+          onChangeText={(text) =>this.setState({type:text})}/></View>
+   <View style={{marginTop:100,marginLeft:10,marginRight:10}}><Button title='Enregistrer'  onPress={() => this.addModele()}></Button></View>
     </View>
-    </ImageBackground>  
+    </View>
     )
   }
 }
+
+
+const styles = StyleSheet.create({
+ titre:{
+   borderBottomWidth:3,
+   backgroundColor:'#B8F436',
+   color:'black',
+   borderColor:'white',
+   borderRadius:15
+  },
+  texttire:{
+fontSize:18,
+fontWeight: 'bold',
+marginLeft:10
+  },
+ })
+ 
